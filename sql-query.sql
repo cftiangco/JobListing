@@ -8,7 +8,7 @@ CREATE TABLE `tblcategories`(
 	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )ENGINE=innoDB DEFAULT CHARSET=latin1;
 
-/* jobs table */
+/* jobs table test*/
 CREATE TABLE `tbljobs`(
 	`id` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`category_id` INT NOT NULL,
