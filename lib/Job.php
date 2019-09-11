@@ -13,8 +13,10 @@ class Job {
 
     
     public function findOne($id) {
-        $this->db->query("SELECT jobs.*,categories.name AS cname FROM tbljobs jobs INNER JOIN tblcategories categories ON jobs.category_id = categories.id WHERE jobs.id = :id ORDER BY jobs.created_at DESC;");
-        $this->db->bind(":id",$id);
+        $this->db->query("SELECT jobs.*,jobs.contact_number AS company_contact,cat.name AS cname,u.*,u.id AS userId FROM tbljobs jobs
+                            INNER JOIN tblcategories cat ON cat.id = jobs.category_id
+                            INNER JOIN tbluser u ON u.id = jobs.user_id
+                            WHERE jobs.id = 1;",[':id' => $id]);
         return $this->db->getOne();
     }
 
@@ -24,18 +26,9 @@ class Job {
     }
 
     public function create($data) {
-        $sql = "INSERT INTO tbljobs(category_id,company,job_title,description,salary,location,contact_user,contact_email)
-                    VALUES(:category_id,:company,:job_title,:description,:salary,:location,:contact_user,:contact_email);";
-        $this->db->query($sql);
-        $this->db->bind(':category_id',$data['category_id']);
-        $this->db->bind(':job_title',$data['job_title']);
-        $this->db->bind(':company',$data['company']);
-        $this->db->bind(':description',$data['description']);
-        $this->db->bind(':location',$data['location']);
-        $this->db->bind(':salary',$data['salary']);
-        $this->db->bind(':contact_user',$data['contact_user']);
-        $this->db->bind(':contact_email',$data['contact_email']);
-        if($this->db->execute()) {
+        $sql = "INSERT INTO tbljobs(category_id,company,job_title,description,salary,location,contact_user,contact_number,contact_email,user_id)
+                    VALUES(:category_id,:company,:job_title,:description,:salary,:location,:contact_user,:contact_number,:contact_email,:user_id);";
+        if($this->db->query($sql,$data)) {
             return true;
         } else {
             return false;
@@ -43,16 +36,16 @@ class Job {
     }
 
     public function delete($id) {
-        $sql = "DELETE FROM tbljobs WHERE id = $id";
-        $this->db->query($sql);
-        if($this->db->execute()) {
+        $sql = "DELETE FROM tbljobs WHERE id = :id";
+        
+        if($this->db->query($sql,[':id' => $id])) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
-    public function update($id,$data) {
+    public function update($data) {
         $sql = "UPDATE tbljobs SET 
         category_id = :category_id,
         job_title = :job_title,
@@ -61,23 +54,14 @@ class Job {
         location = :location,
         salary = :salary,
         contact_user = :contact_user,
+        contact_number = :contact_number,
         contact_email = :contact_email
-        WHERE id = $id
+        WHERE id = :id
         ";
 
-        $this->db->query($sql);
-        $this->db->bind(':category_id',$data['category_id']);
-        $this->db->bind(':job_title',$data['job_title']);
-        $this->db->bind(':company',$data['company']);
-        $this->db->bind(':description',$data['description']);
-        $this->db->bind(':location',$data['location']);
-        $this->db->bind(':salary',$data['salary']);
-        $this->db->bind(':contact_user',$data['contact_user']);
-        $this->db->bind(':contact_email',$data['contact_email']);
-        if($this->db->execute()) {
+        if($this->db->query($sql,$data)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }

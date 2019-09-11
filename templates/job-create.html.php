@@ -40,8 +40,13 @@
 		</div>
 
 		<div class="form-group">
-			<label>Contact User</label>
+			<label>Contact Person</label>
 			<input type="text" class="form-control" name="contact-user">
+		</div>
+
+		<div class="form-group">
+			<label>Contact Number</label>
+			<input type="text" class="form-control" name="contact-number">
 		</div>
 
 		<div class="form-group">

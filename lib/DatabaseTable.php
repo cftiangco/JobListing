@@ -28,10 +28,17 @@
             }
         }
 
-        public function query($query) {
-            $this->stmt = $this->dbh->prepare($query);
+        public function query($sql,$parameters = []) {
+            try {
+                $this->stmt = $this->dbh->prepare($sql);
+                return $this->stmt->execute($parameters);
+            } catch(PDOException $err) {
+                echo $err->getMessage();
+            }
+            
         }
 
+        /*
         public function bind($param, $value, $type = null) {
             if(is_null($type)) {
                 switch(true) {
@@ -51,18 +58,25 @@
             }
             $this->stmt->bindValue($param,$value,$type);
         }
+        */
 
+        /*
         public function execute() {
-            return $this->stmt->execute();
+            try {
+                return $this->stmt->execute();   
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
         }
+        */
 
         public function getAll() {
-            $this->execute();
+            //$this->execute();
             return $this->stmt->fetchAll(PDO::FETCH_OBJ);
         }
 
         public function getOne() {
-            $this->execute();
+            //$this->execute();
             return $this->stmt->fetch(PDO::FETCH_OBJ);
         }
     }

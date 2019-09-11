@@ -48,6 +48,11 @@
 		</div>
 
 		<div class="form-group">
+			<label>Contact Number</label>
+			<input type="text" class="form-control" name="contact-number" value="<?php echo $job->company_contact; ?>">
+		</div>
+
+		<div class="form-group">
 			<label>Contact Email</label>
 			<input type="email" class="form-control" name="contact-email" value="<?php echo $job->contact_email; ?>">
 		</div>
