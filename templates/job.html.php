@@ -1,6 +1,6 @@
 <?php include_once 'inc/header.php' ?>
 	<h2 class="page-header">
-		<?php print_r($job->job_title); ?> (<?php echo $job->location ?>)
+		<?php echo $job->job_title . ' ' . "($job->location)" ?>
 	</h2>
 	<small>Posted By: <?php echo $job->first_name. ' ' .$job->last_name;?> on <?php echo $job->created_at; ?></small>
 	<hr>
@@ -19,9 +19,9 @@
 
 	<?php if($job->user_id == $_SESSION['user']->id): ?>
 		<div class="well">
-			<a href="edit.php?id=<?php echo $job->id; ?>" class="btn btn-info">Edit</a>
+			<a href="edit.php?id=<?php echo $job->jid; ?>" class="btn btn-info">Edit</a>
 			<form method="POST" action="job.php" style="display: inline">
-				<input type="hidden" name="job-id" value="<?php echo $job->id;?>" >
+				<input type="hidden" name="job-id" value="<?php echo $job->jid;?>" >
 				<button type="submit" value="delete" class="btn btn-danger">Delete</button>
 			</form>
 		</div>

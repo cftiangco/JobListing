@@ -13,7 +13,7 @@ class Job {
 
     
     public function findOne($id) {
-        $this->db->query("SELECT jobs.*,jobs.contact_number AS company_contact,cat.name AS cname,u.*,u.id AS userId FROM tbljobs jobs
+        $this->db->query("SELECT jobs.*,jobs.id AS jid,jobs.contact_number AS company_contact,cat.name AS cname,u.*,u.id AS userId FROM tbljobs jobs
                             INNER JOIN tblcategories cat ON cat.id = jobs.category_id
                             INNER JOIN tbluser u ON u.id = jobs.user_id
                             WHERE jobs.id = :id;",[':id' => $id]);
@@ -21,11 +21,6 @@ class Job {
     }
 
     public function getAllByCategory($id) {
-        /*
-        $this->db->query("SELECT jobs.*,categories.name AS cname FROM tbljobs jobs INNER JOIN tblcategories category ON jobs.category_id = category.id WHERE jobs.category_id = : ORDER BY jobs.created_at DESC;");
-        return $this->db->getAll();
-        */
-
         $sql = "SELECT jobs.*,categories.name AS cname FROM tbljobs jobs INNER JOIN tblcategories categories ON jobs.category_id = categories.id WHERE categories.id = :id ORDER BY jobs.created_at DESC";
         $this->db->query($sql,[':id' => $id]);
         
@@ -70,5 +65,55 @@ class Job {
             return true;
         }
         return false;
+    }
+
+    public function jobPagination($limit,$page = 1) {
+        
+        $paging = new Pagination;
+        $paging->limit = $limit;
+        $paging->page = $page;
+        $paging->start = ($paging->page - 1) * $paging->limit;
+
+        $this->db->query("SELECT jobs.*,categories.name AS cname FROM tbljobs jobs INNER JOIN tblcategories categories ON jobs.category_id = categories.id ORDER BY jobs.created_at DESC LIMIT $paging->start, $paging->limit;");
+        $paging->result = $this->db->getAll();
+        $paging->count = $this->getJobCount();
+        $paging->pages = ceil($paging->count / $paging->limit);
+        $paging->next = $paging->page + 1;
+        $paging->previous = $paging->page - 1;
+        return $paging;
+    }
+
+    public function jobByCategoryPagination($limit,$id,$page = 1) {
+        
+        $paging = new Pagination;
+        $paging->limit = $limit;
+        $paging->page = $page;
+        $paging->start = ($paging->page - 1) * $paging->limit;
+
+        $this->db->query("SELECT jobs.*,categories.name AS cname FROM tbljobs jobs INNER JOIN tblcategories categories ON jobs.category_id = categories.id WHERE categories.id = :id ORDER BY jobs.created_at DESC LIMIT $paging->start, $paging->limit;",['id' => $id]);
+        $paging->result = $this->db->getAll();
+        $paging->count = $this->getJobWithCategoryCount($id);
+        $paging->pages = ceil($paging->count / $paging->limit);
+        $paging->next = $paging->page + 1;
+        $paging->previous = $paging->page - 1;
+        return $paging;
+    }
+
+    public function getJobWithCategoryCount($cid) {
+        try {
+            $this->db->query("SELECT COUNT(*) as count FROM tbljobs j INNER JOIN tblcategories c ON j.category_id = c.id WHERE j.category_id = $cid");
+            return $this->db->getOne()->count;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getJobCount() {
+        try {
+            $this->db->query("SELECT COUNT(*) as count FROM tbljobs");
+            return $this->db->getOne()->count;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
     }
 }

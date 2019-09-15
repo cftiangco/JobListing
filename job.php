@@ -19,7 +19,5 @@ if(isset($_POST['job-id'])) {
 
 //PASSED JOB RESULT
 $template->job = $job->findOne($id);
-
-
 //EXECUTE TEMPLATE
 echo $template;

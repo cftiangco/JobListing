@@ -9,14 +9,16 @@ $category = new Category;
 //declaraing php template
 $template = new Template('templates/index.html.php');
 
+$page = $_GET['page'] ?? 1;
+
 //passing dynamic value to html.php template
 $category_id = isset($_GET['category']) ? $_GET['category'] : null;
 if($category_id) {
-    $template->title = "Jobs at " . $category->getCategoryName($category_id)->name;
-    $template->jobs = $job->getAllByCategory($category_id);
+    $template->title = $category->getCategoryName($category_id)->name;
+    $template->jobs = $job->jobByCategoryPagination(2,$category_id,$page);
 } else {
     $template->title = "Latest Jobs";
-    $template->jobs = $job->getAll();
+    $template->jobs = $job->jobPagination(2,$page);
 }
 
 //display all categories to template html.php

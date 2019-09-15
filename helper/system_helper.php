@@ -66,3 +66,7 @@ function truncate($text, $chars = 120) {
     }
     return $text;
 }
+
+class PaginationTemplate {
+
+}
