@@ -62,4 +62,23 @@ class User {
 			return $err->getMesage();
 		}
 	}
+
+	public function update($data) {
+		try {
+			$sql = "UPDATE tbluser SET
+					first_name = :first_name,
+					middle_name = :middle_name,
+					last_name = :last_name,
+					email_address = :email_address,
+					contact_number = :contact_number
+					WHERE id = :id;";
+			if($this->db->query($sql,$data)) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch(PDOException $err) {
+			return $err->getMessage();
+		}
+	}
 }

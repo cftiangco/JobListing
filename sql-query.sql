@@ -62,7 +62,7 @@ CREATE TABLE `tbljobs`(
 	`category_id` INT NOT NULL,
 	`company` VARCHAR(255) NOT NULL,
 	`job_title` VARCHAR(255) NOT NULL,
-	`description` VARCHAR(255) NOT NULL,
+	`description` TEXT NOT NULL,
 	`salary` VARCHAR(255) NOT NULL,
 	`location` VARCHAR(255) NOT NULL,
 	`contact_user` VARCHAR(255) NOT NULL,
@@ -78,3 +78,11 @@ SELECT jobs.*,cat.name AS cname,u.* FROM tbljobs jobs
 	WHERE jobs.id = 1;
 	UPDATE tbljobs SET category_id = 2,company = 'ECS',job_title = 'Manager',description = 'test desc',salary = '55k',location='pampanga',
 	contact_user = 'Heddy',contact_number = '1111',contact_email = 'test@gmail.com' WHERE id=1;
+
+UPDATE tbluser SET
+	first_name = 'Son',
+	middle_name = 'F.',
+	last_name = 'Tiangco',
+	email_address = 'root@gmail.com',
+	contact_number = '09208918136'
+	WHERE id = 3;

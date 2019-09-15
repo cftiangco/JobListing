@@ -15,26 +15,34 @@
             <ul class="nav nav-pills float-right">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php">Home</a>
+                    <a class="nav-link <?= $linkStatusAdmin ?>" href="index.php">Home</a>
                 </li>
             <?php if($_SESSION['user']): ?>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="create.php">Create Listing</a>
+                    <a class="nav-link <?= $linkStatusCreate ?>" href="create.php">Post New Job</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Logout</a>
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['user']->email_address?></a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="myaccount.php?id=<?php echo $_SESSION['user']->id ?>">My Account</a>
+                            <a class="dropdown-item" href="#">Manage Posts</a>
+                            <a class="dropdown-item" href="logout.php">Logout</a>
+                        </div>
+                    </div>
                 </li>
 
             <?php else: ?>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="login.php">Login</a>
+                    <a class="nav-link" href="register.php">Sign Up</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="register.php">Register</a>
+                    <a class="nav-link" href="login.php">Login</a>
                 </li>
 
             <?php endif; ?>

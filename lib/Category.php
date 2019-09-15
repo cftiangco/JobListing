@@ -12,8 +12,7 @@
         }
 
         public function getCategoryName($id) {
-            $this->db->query("SELECT * FROM tblcategories WHERE id = :id");
-            $this->db->bind(":id",$id);
+            $this->db->query("SELECT * FROM tblcategories WHERE id = :id",[':id' => $id]);
             return $this->db->getOne();
         }
     }

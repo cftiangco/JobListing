@@ -16,12 +16,19 @@ class Job {
         $this->db->query("SELECT jobs.*,jobs.contact_number AS company_contact,cat.name AS cname,u.*,u.id AS userId FROM tbljobs jobs
                             INNER JOIN tblcategories cat ON cat.id = jobs.category_id
                             INNER JOIN tbluser u ON u.id = jobs.user_id
-                            WHERE jobs.id = 1;",[':id' => $id]);
+                            WHERE jobs.id = :id;",[':id' => $id]);
         return $this->db->getOne();
     }
 
     public function getAllByCategory($id) {
-        $this->db->query("SELECT jobs.*,categories.name AS cname FROM tbljobs jobs INNER JOIN tblcategories categories ON jobs.category_id = categories.id WHERE jobs.category_id = $id ORDER BY jobs.created_at DESC;");
+        /*
+        $this->db->query("SELECT jobs.*,categories.name AS cname FROM tbljobs jobs INNER JOIN tblcategories category ON jobs.category_id = category.id WHERE jobs.category_id = : ORDER BY jobs.created_at DESC;");
+        return $this->db->getAll();
+        */
+
+        $sql = "SELECT jobs.*,categories.name AS cname FROM tbljobs jobs INNER JOIN tblcategories categories ON jobs.category_id = categories.id WHERE categories.id = :id ORDER BY jobs.created_at DESC";
+        $this->db->query($sql,[':id' => $id]);
+        
         return $this->db->getAll();
     }
 

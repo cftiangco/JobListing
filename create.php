@@ -29,6 +29,7 @@ if($_SESSION['user']) {
 		}
 	}
 	$template->categories = $categories->getAll();
+	$template->linkStatusCreate = 'active';
 	echo $template;
 } else {
 	redirect('login.php','Sorry you are not Log In.','error');

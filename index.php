@@ -21,6 +21,6 @@ if($category_id) {
 
 //display all categories to template html.php
 $template->categories = $category->getAll();
-
+$template->linkStatusAdmin = 'active';
 //echo/display template
 echo $template;
