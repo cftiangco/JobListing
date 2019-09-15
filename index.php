@@ -14,7 +14,7 @@ $page = $_GET['page'] ?? 1;
 //passing dynamic value to html.php template
 $category_id = isset($_GET['category']) ? $_GET['category'] : null;
 if($category_id) {
-    $template->title = $category->getCategoryName($category_id)->name;
+    $template->title = 'Jobs in ' . $category->getCategoryName($category_id)->name;
     $template->jobs = $job->jobByCategoryPagination(2,$category_id,$page);
 } else {
     $template->title = "Latest Jobs";

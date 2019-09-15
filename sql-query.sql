@@ -86,6 +86,3 @@ UPDATE tbluser SET
 	email_address = 'root@gmail.com',
 	contact_number = '09208918136'
 	WHERE id = 3;
-
-
-testcode

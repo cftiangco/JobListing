@@ -1,7 +1,7 @@
 <?php include_once 'inc/header.php' ?>
 	<h2 class="page-header">Update Job Listing</h2>
-	<form method="POST" action="edit.php?id=<?php echo $job->id;?>">
-
+	<form method="POST" action="">
+	<input type="hidden" name="job-id" value="<?php echo $job->jid; ?>">
 		<div class="form-group">
 			<label>Company</label>
 			<input type="text" class="form-control" name="company" value="<?php echo $job->company; ?>">
@@ -19,7 +19,7 @@
 					<?php endif;?>
 
 				<?php endforeach;?>
-			</select>
+			</select>	
 		</div>
 
 		<div class="form-group">

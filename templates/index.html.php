@@ -5,9 +5,21 @@
             <select name="category" class="form-control">
                 <option selected disabled>Choose..</option>
                 <?php foreach($categories as $category):?>
-                  <option value="<?php echo $category->id; ?>">
-                    <?php echo $category->name; ?>
-                  </option>
+                  <?php if(isset($_GET['category'])): ?>
+                    <?php if($_GET['category'] == $category->id): ?>
+                      <option value="<?php echo $category->id; ?>" selected>
+                        <?php echo $category->name; ?>
+                      </option>
+                    <?php else:?>
+                      <option value="<?php echo $category->id; ?>">
+                        <?php echo $category->name; ?>
+                      </option>
+                    <?php endif; ?>
+                  <?php else: ?>
+                    <option value="<?php echo $category->id; ?>">
+                      <?php echo $category->name; ?>
+                    </option>
+                  <?php endif;?>
                 <?php endforeach; ?>
             </select>
             <br>
@@ -37,25 +49,23 @@
     <?php endforeach;?>
 
     <div class="row" >
-        <div class="col-md-10">
+        <div class="col-md-12">
+          <ul class="pagination pagination-sm justify-content-end">
           <?php if(isset($_GET['category'])): ?>
-            <ul class="pagination justify-content-center">
-              <li class="page-item <?php if($jobs->page == 1) echo 'disabled'; ?>"><a class="page-link" href="index.php?page=<?= $jobs->previous ?>">Previous</a></li>
+              <li class="page-item <?php if($jobs->page == 1) echo 'disabled'; ?>"><a class="page-link" href="index.php?page=<?= $jobs->previous ?>"><span aria-hidden="true">&laquo;</span></a></li>
               <?php for($i = 1;$i <= $jobs->pages; $i++):?>
-                <li class="page-item"><a class="page-link" href="index.php?category=<?= $category->id ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                <li class="page-item <?php if($jobs->page == $i) echo 'active';?>"><a class="page-link" href="index.php?category=<?= $category->id ?>&page=<?= $i ?>"><?= $i ?></a></li>
               <?php endfor;?>
-              <li class="page-item <?php if($jobs->page == $jobs->pages) echo 'disabled'; ?>"><a class="page-link" href="index.php?category=<?= $category->id;?>&page=<?= $jobs->next ?>">Next</a></li>
+              <li class="page-item <?php if($jobs->page == $jobs->pages) echo 'disabled'; ?>"><a class="page-link" href="index.php?category=<?= $category->id;?>&page=<?= $jobs->next ?>"><span aria-hidden="true">&raquo;</span></a></li>
             </ul>
           <?php else: ?>
-            <ul class="pagination justify-content-center">
-              <li class="page-item <?php if($jobs->page == 1) echo 'disabled'; ?>"><a class="page-link" href="index.php?page=<?= $jobs->previous ?>">Previous</a></li>
+              <li class="page-item <?php if($jobs->page == 1) echo 'disabled'; ?>"><a class="page-link" href="index.php?page=<?= $jobs->previous ?>"><span aria-hidden="true">&laquo;</span></a></li>
               <?php for($i = 1;$i <= $jobs->pages; $i++):?>
-                <li class="page-item"><a class="page-link" href="index.php?page=<?= $i ?>"><?= $i ?></a></li>
+                <li class="page-item <?php if($jobs->page == $i) echo 'active';?>"><a class="page-link" href="index.php?page=<?= $i ?>"><?= $i ?></a></li>
               <?php endfor;?>
-              <li class="page-item <?php if($jobs->page == $jobs->pages) echo 'disabled'; ?>"><a class="page-link" href="index.php?page=<?= $jobs->next ?>">Next</a></li>
+              <li class="page-item <?php if($jobs->page == $jobs->pages) echo 'disabled'; ?>"><a class="page-link" href="index.php?page=<?= $jobs->next ?>"><span aria-hidden="true">&raquo;</span></a></li>
           </ul>
           <?php endif; ?>
       </div>
     </div>
-
 <?php include_once 'inc/footer.php' ?>

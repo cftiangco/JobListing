@@ -31,4 +31,6 @@ if(isset($_POST['submit'])) {
 $template->categories = $categories->getAll();
 $template->job = $job->findOne($id);
 
+print_r($job->findOne($id));
+
 echo $template;

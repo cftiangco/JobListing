@@ -13,7 +13,7 @@ class Job {
 
     
     public function findOne($id) {
-        $this->db->query("SELECT jobs.*,jobs.id AS jid,jobs.contact_number AS company_contact,cat.name AS cname,u.*,u.id AS userId FROM tbljobs jobs
+        $this->db->query("SELECT jobs.id AS jid, jobs.*,jobs.contact_number AS company_contact,cat.name AS cname,u.*,u.id AS userId FROM tbljobs jobs
                             INNER JOIN tblcategories cat ON cat.id = jobs.category_id
                             INNER JOIN tbluser u ON u.id = jobs.user_id
                             WHERE jobs.id = :id;",[':id' => $id]);

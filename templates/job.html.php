@@ -1,6 +1,6 @@
 <?php include_once 'inc/header.php' ?>
 	<h2 class="page-header">
-		<?php echo $job->job_title . ' ' . "($job->location)" ?>
+		<?php echo '<strong>' . $job->job_title .'</strong>'. ' ' . "($job->location)" ?>
 	</h2>
 	<small>Posted By: <?php echo $job->first_name. ' ' .$job->last_name;?> on <?php echo $job->created_at; ?></small>
 	<hr>
