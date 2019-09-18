@@ -24,6 +24,12 @@
 				<input type="hidden" name="job-id" value="<?php echo $job->jid;?>" >
 				<button type="submit" value="delete" class="btn btn-danger">Delete</button>
 			</form>
+			<a href="print.php?id=<?= $job->jid ?>" class="btn btn-warning">Print</a>
+		</div>
+	<?php else: ?>
+		<div class="well">
+			<a href="print.php?id=<?= $job->jid ?>" class="btn btn-warning">Print</a>
 		</div>
 	<?php endif; ?>
+	<br>
 <?php include_once 'inc/footer.php' ?>
