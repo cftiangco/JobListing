@@ -28,7 +28,7 @@
 		</div>
 	<?php else: ?>
 		<div class="well">
-			<a href="print.php?id=<?= $job->jid ?>" class="btn btn-warning">Print</a>
+			<a href="print.php?id=<?= $job->jid ?>" class="btn btn-warning" target="_blank">Print</a>
 		</div>
 	<?php endif; ?>
 	<br>

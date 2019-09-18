@@ -11,8 +11,9 @@ $pdf->setPrintFooter(false);
 
 $pdf->AddPage();
 */
+
 /*
-$pdf->Cell(190,20,"thisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss is a text",1,1,'C');
+$pdf->Cell(190,20,"this is a sample text",1,1,'C');
 
 $pdf->writeHTMLCell(190,0,'','',
 	"<table>
@@ -100,18 +101,32 @@ $id = isset($_GET['id']) ? $_GET['id'] : '';
 $foundJob = $job->findOne($id);
 
 $pdf = new TCPDF('P','mm','A4');
+
 $pdf->setPrintHeader(false);
 $pdf->setPrintFooter(false);
 $pdf->AddPage();
 
+$logo = "assets/img/logo.png";
+
+//@param $location,x,y,width,height,type,align,resizable=T(TRUE)
+$pdf->Image($logo, 10, 5, 40, 40, 'PNG', '', 'T', false, 300, '', false, false, 1, false, false, false);
+
+
+$pdf->Ln(15);
 $pdf->SetFont('Helvetica','B',20);
-$pdf->Cell(190,15,'www.JobListing.ph',1,1,'C');
+$pdf->Cell(190,15,'www.JobListing.ph',0,1,'R');
+
 $pdf->Ln(10);
 
-//CURRENT DATE
-$pdf->SetFont('Helvetica','',12);
-$pdf->Cell(190,15,"Date: August 25, 1991",0,1);
+$date = date('m/d/Y');
 
+//CURRENT DATE
+$pdf->Ln(10);
+$pdf->SetFont('Helvetica','',12);
+$pdf->Cell(190,15,"Date: $date",0,1,'R');
+
+
+$pdf->Line(0,50,210,50);
 //POSITION
 $pdf->SetFont('Helvetica','',12);
 $pdf->Cell(20,10,'Position',1,0,'C');
@@ -155,5 +170,6 @@ $pdf->cell(140,0,$foundJob->contact_number,1,1,'C');
 $pdf->cell(50,0,'EMAIL',1,0,'C');
 $pdf->cell(140,0,$foundJob->email_address,1,1,'C');
 
+
 ob_end_clean();
-$pdf->Output();
+$pdf->Output('joblisting_job_report');
